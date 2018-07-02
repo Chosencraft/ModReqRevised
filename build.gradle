@@ -35,5 +35,5 @@ jar {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
-    compile(group: 'jdbc', name: 'jdbc', version: '2.0', classifier: 'sources')
+    compileClasspath files("/lib/mysql-connector-java-8.0.11.jar")
 }
