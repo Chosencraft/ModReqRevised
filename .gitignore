@@ -197,3 +197,6 @@ fabric.properties
 .idea/httpRequests
 
 .gradle/*
+
+
+build/

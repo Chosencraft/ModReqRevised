@@ -1,7 +1,8 @@
 package com.chosencraft.www.modreqrevised.tasks;
 
-import com.chosencraft.www.modreq.ModReq;
-import com.chosencraft.www.modreq.Permissions;
+
+import com.chosencraft.www.modreqrevised.ModReq;
+import com.chosencraft.www.modreqrevised.Permissions;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
