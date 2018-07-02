@@ -92,4 +92,21 @@ public class PrepareTableQuery
         }
         return true;
     }
+
+    /*
+
+requestID = int auto
+requesterName = char(16)
+requesterUUID = char(36)
+worldUUID = char(36)
+xLocation = int
+yLocation = int
+zLocation = int
+requestMessage = VARCHAR(512
+taskOwnerUUID = char(36)
+taskOwnerName = char(16)
+taskResolution = TEXT
+timestamp = DATETIME
+requestState = ENUM('CLAIMED','UNCLAIMED','FINISHED', 'ORPHANED')
+     */
 }
