@@ -1,0 +1,5 @@
+name: ModReq
+author: Kiro47
+version: 1.0
+main: com.chosencraft.www.modreqrevised.ModReqRevisedMain
+description: Plugin to allow players to request staff assistance
