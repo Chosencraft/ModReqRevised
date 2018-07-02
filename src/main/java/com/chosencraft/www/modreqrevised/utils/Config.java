@@ -10,6 +10,7 @@ public class Config
     public static String SQL_DB;
     public static String SQL_HOST;
     public static int SQL_PORT;
+    public static String SQL_TABLE_NAME;
 
     private Config (Plugin plugin)
     {
@@ -20,6 +21,6 @@ public class Config
         this.SQL_DB = config.getString("database.database");
         this.SQL_HOST = config.getString("database.host");
         this.SQL_PORT = config.getInt("database.port");
-
+        this.SQL_TABLE_NAME = config.getString("database.table_name");
     }
 }

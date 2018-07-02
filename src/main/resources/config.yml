@@ -11,7 +11,7 @@
 ## Information used to store request logs
 database:
   mysql:
-    table_prefix:
+    table_name:
     username:
     password:
     database:
