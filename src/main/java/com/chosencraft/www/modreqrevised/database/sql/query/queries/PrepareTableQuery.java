@@ -35,20 +35,21 @@ public class PrepareTableQuery
             {
                 Statement statement = database.createStatement();
                 // Usernames are limited to 16 characters oddly enough, I expect that to change one day and break everything
+                // only 256 chars can be used in a chat line, but special characters can be weird. so I'm doubling it
                 statement.execute(
                         "CREATE TABLE " + Config.SQL_TABLE_NAME +
                                 "(" +
                                 "requestID INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                                "requesterName CHAR(16) NOT NULL" +
+                                "requesterName CHAR(16) NOT NULL," +
                                 "requesterUUID CHAR(36) NOT NULL," +
                                 "worldUUID CHAR(36) NOT NULL," +
                                 "xLocation INT NOT NULL," +
                                 "yLocation INT NOT NULL," +
                                 "zLocation INT NOT NULL," +
-                                "requestMessage TEXT(32767) NOT NULL," +
+                                "requestMessage VARCHAR(512) NOT NULL," +
                                 "taskOwnerUUID CHAR(36)," +
-                                "taskOwnerName CHAR(16)" +
-                                "taskResolution TEXT(32767)," +
+                                "taskOwnerName CHAR(16)," +
+                                "taskResolution VARCHAR(512)," +
                                 "timestamp DATETIME NOT NULL," +
                                 "requestState ENUM('CLAIMED','UNCLAIMED','FINISHED', 'ORPHANED') NOT NULL" +
                                 ");");
