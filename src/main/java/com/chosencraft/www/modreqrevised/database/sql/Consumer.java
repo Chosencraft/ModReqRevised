@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -60,17 +61,18 @@ public class Consumer implements Runnable
                             ExecuteQuery executeQuery = (ExecuteQuery) query;
 
                             Statement statement = db.createStatement();
-                            ResultSet set = statement.executeQuery(query.getQuery());
+                            ResultSet set = query.getQuery().executeQuery();
+
 
                             executeQuery.execute(set);
 
                             set.close();
                             statement.close();
+                            query.getQuery().close();
 
                         } else
                         {
-                            Statement statement = db.createStatement();
-                            statement.execute(query.getQuery());
+                            query.getQuery().execute();
                         }
                     } catch (SQLException e)
                     {
