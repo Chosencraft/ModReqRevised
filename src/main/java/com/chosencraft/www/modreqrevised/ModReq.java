@@ -4,8 +4,7 @@ import com.chosencraft.www.modreqrevised.utils.RequestState;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 /**
@@ -42,7 +41,7 @@ public class ModReq
     /** State of the request, ENUM*/
     private RequestState state;
     /** Timestamp of the request*/
-    private String timestamp;
+    private Timestamp timestamp;
 
 
     /**
@@ -66,7 +65,6 @@ public class ModReq
         this.requestMessage = requestMessage;
 
         this.state = RequestState.UNCLAIMED;
-        this.timestamp = new SimpleDateFormat("yyyy-mm-dd hh-mm:ss").format(Calendar.getInstance().getTime());
     }
 
     /**
@@ -79,7 +77,7 @@ public class ModReq
      * @param requestMessage Message made by the requester
      */
     public ModReq(String requesterName, UUID requesterUUID, UUID worldUUID, int locationX, int locationY, int locationZ, String requestMessage,
-                 String taskOwner, UUID taskOwnerUUID, String taskResolution, String timestamp, String requestState, int requestID)
+                  String taskOwner, UUID taskOwnerUUID, String taskResolution, Timestamp timestamp, String requestState, int requestID)
     {
         this.requesterUUID = requesterUUID;
         this.requester = requesterName;
@@ -92,7 +90,6 @@ public class ModReq
         this.requestMessage = requestMessage;
 
         this.state = RequestState.UNCLAIMED;
-        this.timestamp = new SimpleDateFormat("yyyy-mm-dd hh-mm:ss").format(Calendar.getInstance().getTime());
 
         this.taskOwnerUUID = taskOwnerUUID;
         this.taskOwner = taskOwner;
@@ -208,7 +205,7 @@ public class ModReq
      * Retrieve the timestamp of the request
      * @return Timestamp of request at creation
      */
-    public String getTimestamp()
+    public Timestamp getTimestamp()
     {
         return this.timestamp;
     }

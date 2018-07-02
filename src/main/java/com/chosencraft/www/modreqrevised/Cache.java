@@ -32,6 +32,13 @@ public class Cache
     }
 
     /**
+     * Removes all ModReqs from requests cache
+     */
+    public static void clearRequests()
+    {
+        requests.clear();
+    }
+    /**
      *
      * Notifies notifiees with a message
      *
