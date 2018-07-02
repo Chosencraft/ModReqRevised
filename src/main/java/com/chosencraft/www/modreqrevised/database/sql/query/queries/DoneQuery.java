@@ -14,7 +14,7 @@ public class DoneQuery implements Query
 
     private ModReq request;
 
-    public  DoneQuery(ModReq request)
+    public DoneQuery(ModReq request)
     {
         this.request = request;
     }
@@ -34,3 +34,4 @@ public class DoneQuery implements Query
         return statement;
 
     }
+}

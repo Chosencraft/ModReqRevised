@@ -112,6 +112,17 @@ public class ModReq
         return this.requestID;
     }
 
+
+    /**
+     * Sets the ID for the ModReq
+     * @param id ID to set
+     */
+    public void setID(int id)
+    {
+        this.requestID = id;
+    }
+
+
     /**
      * Returns state of the ModReq
      * @return RequestState of ModReq
