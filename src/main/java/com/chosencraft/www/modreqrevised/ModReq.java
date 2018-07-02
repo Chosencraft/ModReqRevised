@@ -54,10 +54,10 @@ public class ModReq
      * @param locationZ Z Coordinate of where the requester is
      * @param requestMessage Message made by the requester
      */
-    public ModReq(UUID requesterUUID, UUID worldUUID, int locationX, int locationY, int locationZ, String requestMessage)
+    public ModReq(String requesterName, UUID requesterUUID, UUID worldUUID, int locationX, int locationY, int locationZ, String requestMessage)
     {
         this.requesterUUID = requesterUUID;
-
+        this.requester = requesterName;
         this.locationWorldUUID = worldUUID;
         this.locationX = locationX;
         this.locationY = locationY;
@@ -78,10 +78,11 @@ public class ModReq
      * @param locationZ Z Coordinate of where the requester is
      * @param requestMessage Message made by the requester
      */
-    public ModReq(UUID requesterUUID, UUID worldUUID, int locationX, int locationY, int locationZ, String requestMessage,
-                  UUID taskOwnerUUID, String taskResolution, String timestamp, String requestState, int requestID)
+    public ModReq(String requesterName, UUID requesterUUID, UUID worldUUID, int locationX, int locationY, int locationZ, String requestMessage,
+                 String taskOwner, UUID taskOwnerUUID, String taskResolution, String timestamp, String requestState, int requestID)
     {
         this.requesterUUID = requesterUUID;
+        this.requester = requesterName;
 
         this.locationWorldUUID = worldUUID;
         this.locationX = locationX;
@@ -94,7 +95,7 @@ public class ModReq
         this.timestamp = new SimpleDateFormat("yyyy-mm-dd hh-mm:ss").format(Calendar.getInstance().getTime());
 
         this.taskOwnerUUID = taskOwnerUUID;
-        this.taskOwner = indexName(this.taskOwnerUUID);
+        this.taskOwner = taskOwner;
         this.taskResolution = taskResolution;
         this.timestamp = timestamp;
         this.state = parseRequestState(requestState);
@@ -154,11 +155,6 @@ public class ModReq
      */
     public String getTaskOwner()
     {
-        if (this.taskOwner == null && this.taskOwnerUUID != null)
-        {
-            this.taskOwner = indexName(this.taskOwnerUUID);
-        }
-
         return this.taskOwner;
     }
 
@@ -173,9 +169,10 @@ public class ModReq
 
     /**
      * Update the task owner
+     * @param taskOwner Name of the new task owner
      * @param taskOwnerUUID UUID of the new task owner
      */
-    public void setTaskOwnerUUID(UUID taskOwnerUUID)
+    public void setTaskOwnerUUID(String taskOwner, UUID taskOwnerUUID)
     {
         if (this.state == RequestState.UNCLAIMED)
         {
@@ -183,7 +180,7 @@ public class ModReq
         }
 
         this.taskOwnerUUID  = taskOwnerUUID;
-        this.taskOwner = indexName(taskOwnerUUID);
+        this.taskOwner = taskOwner;
     }
 
 
@@ -220,7 +217,6 @@ public class ModReq
     public void completeTask()
     {
         this.state = RequestState.FINISHED;
-        updateRequestInDatabase();
     }
 
     /**
@@ -231,22 +227,6 @@ public class ModReq
     {
         this.state = RequestState.FINISHED;
         this.taskResolution = taskResolution;
-        updateRequestInDatabase();
-    }
-
-    /**
-     * Update the request to the backend databases
-     */
-    private void updateRequestInDatabase()
-    {
-        //TODO: manually update to SQL
-    }
-
-    private void addRequestToDatabase()
-    {
-        //TODO: add to database
-        //TODO: also retrieve the task via all info specifications and get ID number
-        //this.requestID = requestID() ?
     }
 
     /**
@@ -270,9 +250,12 @@ public class ModReq
         }
     }
 
-    private String indexName(UUID playerUUID)
+    /**
+     * String format of the ModReq
+     * @return Formatted string
+     */
+    public String toString()
     {
-        //TODO: parse player uuid to name
-        return null;
+        return String.format("Request [%d, %s, %s]", requestID, state.toString(), requester);
     }
 }
