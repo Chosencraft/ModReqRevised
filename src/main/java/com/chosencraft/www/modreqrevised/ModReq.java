@@ -180,8 +180,14 @@ public class ModReq
      * @param taskOwner Name of the new task owner
      * @param taskOwnerUUID UUID of the new task owner
      */
-    public void setTaskOwnerUUID(String taskOwner, UUID taskOwnerUUID)
+    public void setTaskOwner(String taskOwner, UUID taskOwnerUUID)
     {
+        if (taskOwner == null || taskOwnerUUID == null)
+        {
+            this.state = RequestState.UNCLAIMED;
+            return;
+        }
+
         if (this.state == RequestState.UNCLAIMED)
         {
             this.state = RequestState.CLAIMED;

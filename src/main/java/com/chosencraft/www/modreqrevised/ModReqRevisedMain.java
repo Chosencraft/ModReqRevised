@@ -1,5 +1,6 @@
 package com.chosencraft.www.modreqrevised;
 
+import com.chosencraft.www.modreqrevised.commands.ClaimRequestCommand;
 import com.chosencraft.www.modreqrevised.commands.RequestCommand;
 import com.chosencraft.www.modreqrevised.database.sql.Database;
 import com.chosencraft.www.modreqrevised.database.sql.MySQL;
@@ -8,13 +9,15 @@ import com.chosencraft.www.modreqrevised.utils.Config;
 import com.chosencraft.www.modreqrevised.utils.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.Connection;
+import java.util.UUID;
 
 public class ModReqRevisedMain extends JavaPlugin
 {
 
     public static Database database;
     public static Logger logger;
+
+    public static UUID consoleUUID = UUID.fromString("00000000-0000-0000-0000-000000000001"); // console reserved uuid
 
     public void onEnable()
     {
@@ -50,5 +53,6 @@ public class ModReqRevisedMain extends JavaPlugin
     private void registerCommands()
     {
         getCommand("request").setExecutor(new RequestCommand());
+        getCommand("claim").setExecutor(new ClaimRequestCommand());
     }
 }
