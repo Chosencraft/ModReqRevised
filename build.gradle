@@ -6,9 +6,7 @@ plugins {
 
 group 'ModReqRevised'
 version '1.0-SNAPSHOT'
-archivesBaseName= 'ModReqRevised' +
-        '' +
-        ''
+archivesBaseName= 'ModReqRevised'
 sourceCompatibility = 1.8
 
 repositories {
