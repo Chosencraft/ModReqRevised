@@ -1,5 +1,6 @@
 package com.chosencraft.www.modreqrevised;
 
+import com.chosencraft.www.modreqrevised.commands.RequestCommand;
 import com.chosencraft.www.modreqrevised.database.sql.Database;
 import com.chosencraft.www.modreqrevised.database.sql.MySQL;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.PrepareTableQuery;
@@ -26,6 +27,8 @@ public class ModReqRevisedMain extends JavaPlugin
         {
          logger.logError("Unable to connect to database!");
         }
+
+        registerCommands();
     }
 
     public void onDisable()
@@ -41,4 +44,11 @@ public class ModReqRevisedMain extends JavaPlugin
         new PrepareTableQuery();
     }
 
+    /**
+     * Registers all commands to bukkit API
+     */
+    private void registerCommands()
+    {
+        getCommand("request").setExecutor(new RequestCommand());
+    }
 }

@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public class request implements CommandExecutor
+public class RequestCommand implements CommandExecutor
 {
     private Map<Player, Integer> sentReqs = new WeakHashMap<>();
     private Map<Player, String>  issuedReqs = new WeakHashMap<>();
-    long timestamp = 0;
+    private long timestamp = 0;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -26,13 +26,18 @@ public class request implements CommandExecutor
             timestamp = System.currentTimeMillis();
             issuedReqs.clear();
         }
+        if (!(sender instanceof Player))
+        {
+            sender.sendMessage(Chat.format("Unable to make a request from console!"));
+            return true;
+        }
 
         Player player = (Player) sender;
         int count = 0;
 
-        if (sentReqs.containsKey(player.getName()))
+        if (sentReqs.containsKey(player))
         {
-            count = sentReqs.get(player.getName());
+            count = sentReqs.get(player);
         }
 
         if (count < 3 )
@@ -75,7 +80,7 @@ public class request implements CommandExecutor
             }
             else
             {
-                sender.sendMessage(Chat.format("&cYou must use at least 3 words to submit a moderator request!"));
+                sender.sendMessage(Chat.format("&cYou must use at least 3 words to submit a moderator RequestCommand!"));
             }
         }
         else
