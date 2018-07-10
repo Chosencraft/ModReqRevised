@@ -3,6 +3,7 @@ package com.chosencraft.www.modreqrevised.commands;
 import com.chosencraft.purefocus.Chat;
 import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.ModReq;
+import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.utils.RequestState;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
@@ -19,6 +20,12 @@ public class CheckCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args)
     {
+        if (!commandSender.hasPermission(Permissions.PERM_COMMAND_CHECK))
+        {
+            // no responses
+            return true;
+        }
+
         if (args.length == 0)
         {
             Collection<ModReq> requestValues = Cache.requests.values();

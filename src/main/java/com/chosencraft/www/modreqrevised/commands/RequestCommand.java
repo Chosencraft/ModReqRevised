@@ -2,7 +2,9 @@ package com.chosencraft.www.modreqrevised.commands;
 
 import com.chosencraft.purefocus.Chat;
 import com.chosencraft.www.modreqrevised.ModReq;
+import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.NewModReqQuery;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,6 +23,11 @@ public class RequestCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
+        if (!sender.hasPermission(Permissions.PERM_COMMAND_REQUEST))
+        {
+            sender.sendMessage(ChatColor.RED + "You may not send a  moderator request!");
+            return true;
+        }
         if (System.currentTimeMillis() - timestamp > 0x124F80L)
         {
             timestamp = System.currentTimeMillis();

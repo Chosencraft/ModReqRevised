@@ -4,6 +4,7 @@ import com.chosencraft.purefocus.Chat;
 import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.ModReq;
 import com.chosencraft.www.modreqrevised.ModReqRevisedMain;
+import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.ClaimQuery;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.UnclaimQuery;
@@ -19,6 +20,11 @@ public class ClaimRequestCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
+        if (!sender.hasPermission(Permissions.PERM_COMMAND_CLAIM))
+        {
+            // silent ignore
+            return true;
+        }
 
         if (args.length > 0)
         {

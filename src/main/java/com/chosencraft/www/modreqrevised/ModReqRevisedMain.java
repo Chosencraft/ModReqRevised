@@ -1,7 +1,6 @@
 package com.chosencraft.www.modreqrevised;
 
-import com.chosencraft.www.modreqrevised.commands.ClaimRequestCommand;
-import com.chosencraft.www.modreqrevised.commands.RequestCommand;
+import com.chosencraft.www.modreqrevised.commands.*;
 import com.chosencraft.www.modreqrevised.database.sql.Database;
 import com.chosencraft.www.modreqrevised.database.sql.MySQL;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.PrepareTableQuery;
@@ -54,5 +53,8 @@ public class ModReqRevisedMain extends JavaPlugin
     {
         getCommand("request").setExecutor(new RequestCommand());
         getCommand("claim").setExecutor(new ClaimRequestCommand());
+        getCommand("done").setExecutor(new DoneCommand());
+        getCommand("reopen").setExecutor(new ReopenCommand());
+        getCommand("check").setExecutor(new CheckCommand());
     }
 }

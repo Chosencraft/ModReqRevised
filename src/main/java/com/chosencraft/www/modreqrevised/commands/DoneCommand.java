@@ -3,6 +3,7 @@ package com.chosencraft.www.modreqrevised.commands;
 import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.ModReq;
 import com.chosencraft.www.modreqrevised.ModReqRevisedMain;
+import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.DoneQuery;
 import net.md_5.bungee.api.ChatColor;
@@ -21,6 +22,12 @@ public class DoneCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
     {
+
+        if (!commandSender.hasPermission(Permissions.PERM_COMMAND_FINISH))
+        {
+            // ignore silently
+            return true;
+        }
 
         if (args.length > 0)
         {

@@ -2,6 +2,7 @@ package com.chosencraft.www.modreqrevised.commands;
 
 import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.ModReq;
+import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.ReopenQuery;
 import net.md_5.bungee.api.ChatColor;
@@ -14,6 +15,11 @@ public class ReopenCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
     {
+        if (!commandSender.hasPermission(Permissions.PERM_COMMAND_REOPEN))
+        {
+            // ignore silently
+            return true;
+        }
         if (args.length > 0 )
         {
             int id;
