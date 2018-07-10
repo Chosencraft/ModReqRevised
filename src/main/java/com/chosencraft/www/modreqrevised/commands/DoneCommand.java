@@ -68,7 +68,7 @@ public class DoneCommand implements CommandExecutor
             {
                 for (int i = 1; i < args.length ; i++)
                 {
-                    resolution.append(args[i]);
+                    resolution.append(args[i]).append(" ");
                 }
 
             }

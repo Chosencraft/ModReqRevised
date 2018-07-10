@@ -246,6 +246,17 @@ public class ModReq
     }
 
     /**
+     * Clears completion variables to make the task fresh again.
+     */
+    public void reopenTask()
+    {
+        this.state = RequestState.UNCLAIMED;
+        this.taskOwner = null;
+        this.taskOwnerUUID = null;
+        this.taskResolution = null;
+    }
+
+    /**
      * Parses the string request into a RequestState Enum
      * @param requestState state to be parsed
      * @return The Request state parsed
