@@ -1,8 +1,10 @@
 package com.chosencraft.www.modreqrevised;
 
+import com.chosencraft.purefocus.Chat;
 import com.chosencraft.www.modreqrevised.utils.RequestState;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -262,6 +264,31 @@ public class ModReq
                 // something happened to it, don't know what
                 return RequestState.ORPHANED;
         }
+    }
+
+    public String getFormattedSummary()
+    {
+        StringBuilder sb = new StringBuilder();
+
+            boolean isOnline = false;
+            Player p = Bukkit.getPlayerExact(this.getRequester());
+            if (p != null && p.isOnline())
+            {
+                sb.append("&6#").append(this.requestID).append(" &a").append(this.getRequester()).append(" &7- ");
+            } else
+            {
+
+                sb.append("&6#").append(this.requestID).append("&c").append(this.getRequester()).append(" &7- ");
+            }
+
+
+        if (state.equals(RequestState.CLAIMED))
+        {
+            sb.append("&dClaimed by ").append(this.getTaskOwner());
+            return Chat.format(sb.toString());
+        }
+
+        return Chat.format(Chat.trim(sb.toString(), this.requestMessage));
     }
 
     /**
