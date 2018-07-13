@@ -1,13 +1,17 @@
 package com.chosencraft.www.modreqrevised;
 
 import com.chosencraft.www.modreqrevised.commands.*;
+import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.Database;
 import com.chosencraft.www.modreqrevised.database.sql.MySQL;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.PrepareTableQuery;
 import com.chosencraft.www.modreqrevised.utils.Config;
 import com.chosencraft.www.modreqrevised.utils.Logger;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
 import java.util.UUID;
 
 public class ModReqRevisedMain extends JavaPlugin

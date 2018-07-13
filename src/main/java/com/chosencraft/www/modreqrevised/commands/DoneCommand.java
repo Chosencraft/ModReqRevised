@@ -11,16 +11,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class DoneCommand implements CommandExecutor
+public class DoneCommand extends BukkitCommand
 {
 
 
+    public DoneCommand(String commandName)
+    {
+        super(commandName);
+        this.description = "Finish a modreq!";
+        this.usageMessage = "/" + commandName + " <request ID>";
+        this.setAliases(new ArrayList<>());
+    }
+
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
+    public boolean execute(CommandSender commandSender, String alias, String[] args)
     {
 
         if (!commandSender.hasPermission(Permissions.PERM_COMMAND_FINISH))

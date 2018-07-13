@@ -9,12 +9,22 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 
-public class ReopenCommand implements CommandExecutor
+import java.util.ArrayList;
+
+public class ReopenCommand extends BukkitCommand
 {
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args)
+
+    public ReopenCommand(String commandName)
     {
+        super(commandName);
+        this.description = "Reopen a finished command!!";
+        this.usageMessage = "/" + commandName + " <request ID>";
+        this.setAliases(new ArrayList<>());
+    }
+    @Override
+    public boolean execute(CommandSender commandSender, String alias, String[] args)    {
         if (!commandSender.hasPermission(Permissions.PERM_COMMAND_REOPEN))
         {
             // ignore silently

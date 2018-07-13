@@ -12,13 +12,25 @@ import com.chosencraft.www.modreqrevised.utils.RequestState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 
-public class ClaimRequestCommand implements CommandExecutor
+
+public class ClaimRequestCommand extends BukkitCommand
 {
+
+    public ClaimRequestCommand(String commandName)
+    {
+        super(commandName);
+        this.description = "Claim a modreq!";
+        this.usageMessage = "/" + commandName + " <ModReq ID>";
+        this.setAliases(new ArrayList<>());
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    public boolean execute(CommandSender sender, String alias, String[] args)
     {
         if (!sender.hasPermission(Permissions.PERM_COMMAND_CLAIM))
         {

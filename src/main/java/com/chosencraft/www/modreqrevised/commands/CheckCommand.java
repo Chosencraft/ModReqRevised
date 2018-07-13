@@ -9,17 +9,25 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.defaults.BukkitCommand;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CheckCommand implements CommandExecutor
+public class CheckCommand extends BukkitCommand
 {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args)
+    public CheckCommand(String commandName)
     {
+        super(commandName);
+        this.description = "Check the status of a command!!";
+        this.usageMessage = "/" + commandName + " <request ID>";
+        this.setAliases(new ArrayList<>());
+    }
+
+    @Override
+    public boolean execute(CommandSender commandSender, String alias, String[] args)    {
         if (!commandSender.hasPermission(Permissions.PERM_COMMAND_CHECK))
         {
             // no responses
@@ -71,9 +79,13 @@ public class CheckCommand implements CommandExecutor
             }
             else
             {
+                commandSender.sendMessage(String.format("Modreq: %d %s ", request.getID(), request.getRequester()));
                 commandSender.sendMessage(request.getRequestMessage());
+                commandSender.sendMessage(request.getRequesterLocation().toString());
+                commandSender.sendMessage(request.getTimestamp().toString());
             }
         }
         return false;
     }
+
 }
