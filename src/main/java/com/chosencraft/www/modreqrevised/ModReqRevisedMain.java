@@ -30,20 +30,14 @@ public class ModReqRevisedMain extends JavaPlugin
         saveDefaultConfig();
 
         config = new Config(this);
-
-        this.database = new MySQL(Config.SQL_USER, Config.SQL_PASS,Config.SQL_DB,Config.SQL_HOST,Config.SQL_PORT);
-        if (!(this.database.connect()))
-        {
-         logger.logError("Unable to connect to database!");
-         this.getPluginLoader().disablePlugin(this);
-        }
+        configureSQL();
 
         registerCommands();
     }
 
     public void onDisable()
     {
-
+        logger.logInfo("Disabling ModReq!");
     }
 
     /**
@@ -59,10 +53,54 @@ public class ModReqRevisedMain extends JavaPlugin
      */
     private void registerCommands()
     {
-        getCommand("request").setExecutor(new RequestCommand());
-        getCommand("claim").setExecutor(new ClaimRequestCommand());
-        getCommand("done").setExecutor(new DoneCommand());
-        getCommand("reopen").setExecutor(new ReopenCommand());
-        getCommand("check").setExecutor(new CheckCommand());
+
+        try
+        {
+            // Reflection method to grab internal command map
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            // Allow the retrieved reflection to become mutable
+            bukkitCommandMap.setAccessible(true);
+            // Register a link to the internal command map
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+
+            // register all the commands.
+            commandMap.register("request", new RequestCommand("request"));
+            commandMap.register("claim", new ClaimRequestCommand("claim"));
+            commandMap.register("done", new DoneCommand("done"));
+            commandMap.register("reopen", new ReopenCommand("reopen"));
+            commandMap.register("check", new CheckCommand("check"));
+        }
+        catch (IllegalAccessException accessException)
+        {
+            logger.logError("Illegal Access Exception on command map reflection!");
+            accessException.printStackTrace();
+        }
+        catch (NoSuchFieldException noFieldException)
+        {
+            logger.logError("No Field Exception on command map reflection!");
+            noFieldException.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * Configure the SQL settings and instance a consumer
+     */
+    private void configureSQL()
+    {
+        // register DB connection
+        this.database = new MySQL(Config.SQL_USER, Config.SQL_PASS, Config.SQL_DB, Config.SQL_HOST, Config.SQL_PORT);
+
+        if (! (this.database.connect()))
+        {
+            logger.logError("Unable to connect to database!");
+            this.getPluginLoader().disablePlugin(this);
+        }
+        else
+        {
+            logger.logInfo("SQL connection successfully established!");
+            new Consumer(this, database);
+        }
     }
 }

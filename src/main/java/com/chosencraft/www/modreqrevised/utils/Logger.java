@@ -21,7 +21,6 @@ public class Logger
 
         this.logger = logger;
         logger.setLevel(Level.ALL);
-
     }
 
 
