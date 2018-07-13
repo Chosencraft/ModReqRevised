@@ -15,6 +15,7 @@ public class ModReqRevisedMain extends JavaPlugin
 
     public static Database database;
     public static Logger logger;
+    public static Config config;
 
     public static UUID consoleUUID = UUID.fromString("00000000-0000-0000-0000-000000000001"); // console reserved uuid
 
@@ -24,10 +25,13 @@ public class ModReqRevisedMain extends JavaPlugin
 
         saveDefaultConfig();
 
+        config = new Config(this);
+
         this.database = new MySQL(Config.SQL_USER, Config.SQL_PASS,Config.SQL_DB,Config.SQL_HOST,Config.SQL_PORT);
         if (!(this.database.connect()))
         {
          logger.logError("Unable to connect to database!");
+         this.getPluginLoader().disablePlugin(this);
         }
 
         registerCommands();
