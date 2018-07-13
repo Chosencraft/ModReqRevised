@@ -46,7 +46,7 @@ public class PrepareTableQuery
                                 "taskOwnerUUID CHAR(36)," +
                                 "taskOwnerName CHAR(16)," +
                                 "taskResolution VARCHAR(512)," +
-                                "timestamp DATETIME NOT NULL," +
+                                "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP," +
                                 "requestState ENUM('CLAIMED','UNCLAIMED','FINISHED', 'ORPHANED') NOT NULL" +
                                 ");");
             }

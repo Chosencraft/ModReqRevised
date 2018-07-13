@@ -50,7 +50,7 @@ public class GetModReqIDQuery implements ExecuteQuery
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("SELECT  MAX(requestID) FROM ? GROUP BY requestID ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("SELECT  MAX(`requestID`) FROM ? GROUP BY requestID ;");
 
         statement.setString(1, Config.SQL_TABLE_NAME);
 

@@ -25,8 +25,8 @@ public class NewModReqQuery implements Query
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("INSERT INTO ? ('requesterName', 'requesterUUID', 'worldUUID', 'xLocation', 'yLocation', 'zLocation', 'requestMessage') " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?) ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("INSERT INTO ? (`requesterName`, `requesterUUID`, `worldUUID`, `xLocation`, `yLocation`, `zLocation`, `requestMessage`, `requestState`) " +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ;");
 
         statement.setString(1, Config.SQL_TABLE_NAME);
         statement.setString(2, req.getRequester());
@@ -36,6 +36,7 @@ public class NewModReqQuery implements Query
         statement.setString(6, Integer.toString(req.getRequesterLocation().getBlockY()));
         statement.setString(7, Integer.toString(req.getRequesterLocation().getBlockZ()));
         statement.setString(8, req.getRequestMessage());
+        statement.setString(9, req.getState().toString());
 
         return statement;
     }

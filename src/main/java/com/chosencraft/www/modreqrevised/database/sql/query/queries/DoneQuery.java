@@ -22,7 +22,7 @@ public class DoneQuery implements Query
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE ? SET 'requestState'=? , 'taskOwnerUUID'=? , 'taskOwnerName'=? , 'taskResolution'=? WHERE 'requestID'=?  ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE ? SET `requestState`=? , `taskOwnerUUID`=? , `taskOwnerName`=? , `taskResolution`=? WHERE `requestID`=?  ;");
 
         statement.setString(1, Config.SQL_TABLE_NAME);
         statement.setString(2, RequestState.FINISHED.toString());
