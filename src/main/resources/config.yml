@@ -11,12 +11,12 @@
 ## Information used to store request logs
 database:
   mysql:
-    table_name:
-    username:
-    password:
-    database:
-    port:
-    host:
+    table_name: modreqs
+    username: user
+    password: pass
+    database: db
+    port:3306
+    host: 127.0.0.1
 
 ## Do not change, will break your settings
 configVersion: 0.1
