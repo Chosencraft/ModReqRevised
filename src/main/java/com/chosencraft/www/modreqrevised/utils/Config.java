@@ -12,15 +12,15 @@ public class Config
     public static int SQL_PORT;
     public static String SQL_TABLE_NAME;
 
-    private Config (Plugin plugin)
+    public Config (Plugin plugin)
     {
         FileConfiguration config = plugin.getConfig();
 
-        this.SQL_USER = config.getString("database.username");
-        this.SQL_PASS = config.getString("database.password");
-        this.SQL_DB = config.getString("database.database");
-        this.SQL_HOST = config.getString("database.host");
-        this.SQL_PORT = config.getInt("database.port");
-        this.SQL_TABLE_NAME = config.getString("database.table_name");
+        this.SQL_USER = config.getString("database.mysql.username");
+        this.SQL_PASS = config.getString("database.mysql.password");
+        this.SQL_DB = config.getString("database.mysql.database");
+        this.SQL_HOST = config.getString("database.mysql.host");
+        this.SQL_PORT = config.getInt("database.mysql.port");
+        this.SQL_TABLE_NAME = config.getString("database.mysql.table_name");
     }
 }
