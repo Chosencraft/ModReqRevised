@@ -31,7 +31,7 @@ public class ModReqRevisedMain extends JavaPlugin
 
         config = new Config(this);
         configureSQL();
-
+        setupTables();
         registerCommands();
     }
 

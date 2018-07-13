@@ -27,17 +27,13 @@ public class PrepareTableQuery
      */
     private void createRequestTable()
     {
-        // Check if table exists
-
-        if (!checkIfTableExists())
-        {
             try
             {
                 Statement statement = database.createStatement();
                 // Usernames are limited to 16 characters oddly enough, I expect that to change one day and break everything
                 // only 256 chars can be used in a chat line, but special characters can be weird. so I'm doubling it
                 statement.execute(
-                        "CREATE TABLE " + Config.SQL_TABLE_NAME +
+                        "CREATE TABLE IF NOT EXISTS " + Config.SQL_TABLE_NAME +
                                 "(" +
                                 "requestID INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
                                 "requesterName CHAR(16) NOT NULL," +
@@ -59,38 +55,6 @@ public class PrepareTableQuery
                 log.logError("Unable to create SQL tables!");
                 sqlException.printStackTrace();
             }
-        }
-    }
-
-    /**
-     * checks if the table exists
-     * @return true if exists, false otherwise
-     */
-    private boolean checkIfTableExists()
-    {
-        try
-        {
-            PreparedStatement statement = database.createPreparedStatement("SELECT count(*) FROM information_schema.TABLES " +
-                    "WHERE (TABLE_SCHEMA = '?') AND (TABLE_NAME = ?);");
-            statement.setString(1,Config.SQL_DB);
-            statement.setString(2,Config.SQL_TABLE_NAME);
-            ResultSet results = statement.executeQuery();
-
-
-            if ( results == null || results.wasNull())
-            {
-                return false;
-            }
-            log.logInfo("Table already exists....");
-            return true;
-        }
-        catch (SQLException sqlException)
-        {
-            // Couldn't connect so the server, time to debug
-            log.logError("Could not connect to MySQL Database! " + sqlException.getErrorCode());
-            sqlException.printStackTrace();
-        }
-        return true;
     }
 
     /*
