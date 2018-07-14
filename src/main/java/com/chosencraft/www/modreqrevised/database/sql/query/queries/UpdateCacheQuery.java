@@ -20,11 +20,11 @@ public class UpdateCacheQuery implements ExecuteQuery
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("SELECT * FROM ? WHERE `requestState`=? OR `requestState`=? ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("SELECT * FROM " + Config.SQL_TABLE_NAME + " WHERE `requestState`=? OR `requestState`=? ;");
 
-        statement.setString(1, Config.SQL_TABLE_NAME);
-        statement.setString(2, RequestState.UNCLAIMED.toString());
-        statement.setString(3, CLAIMED.toString());
+        //statement.setString(1, Config.SQL_TABLE_NAME);
+        statement.setString(1, RequestState.UNCLAIMED.toString());
+        statement.setString(2, CLAIMED.toString());
 
         return statement;
     }

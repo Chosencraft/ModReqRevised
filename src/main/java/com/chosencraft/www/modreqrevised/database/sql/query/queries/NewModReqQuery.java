@@ -25,18 +25,18 @@ public class NewModReqQuery implements Query
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("INSERT INTO ? (`requesterName`, `requesterUUID`, `worldUUID`, `xLocation`, `yLocation`, `zLocation`, `requestMessage`, `requestState`) " +
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("INSERT INTO " + Config.SQL_TABLE_NAME +" (`requesterName`, `requesterUUID`, `worldUUID`, `xLocation`, `yLocation`, `zLocation`, `requestMessage`, `requestState`) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?) ;");
 
-        statement.setString(1, Config.SQL_TABLE_NAME);
-        statement.setString(2, req.getRequester());
-        statement.setString(3, req.getRequesterUUID().toString());
-        statement.setString(4, req.getRequesterLocation().getWorld().getUID().toString());
-        statement.setString(5, Integer.toString(req.getRequesterLocation().getBlockX()));
-        statement.setString(6, Integer.toString(req.getRequesterLocation().getBlockY()));
-        statement.setString(7, Integer.toString(req.getRequesterLocation().getBlockZ()));
-        statement.setString(8, req.getRequestMessage());
-        statement.setString(9, req.getState().toString());
+        //statement.setString(1, Config.SQL_TABLE_NAME);
+        statement.setString(1, req.getRequester());
+        statement.setString(2, req.getRequesterUUID().toString());
+        statement.setString(3, req.getRequesterLocation().getWorld().getUID().toString());
+        statement.setString(4, Integer.toString(req.getRequesterLocation().getBlockX()));
+        statement.setString(5, Integer.toString(req.getRequesterLocation().getBlockY()));
+        statement.setString(6, Integer.toString(req.getRequesterLocation().getBlockZ()));
+        statement.setString(7, req.getRequestMessage());
+        statement.setString(8, req.getState().toString());
 
         return statement;
     }

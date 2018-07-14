@@ -22,13 +22,13 @@ public class ClaimQuery implements Query
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE ? SET `taskOwnerUUID`=? , `taskOwnerName`=? , `requestState`=? WHERE `requestID`=? ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET `taskOwnerUUID`=? , `taskOwnerName`=? , `requestState`=? WHERE `requestID`=? ;");
 
-        statement.setString(1, Config.SQL_TABLE_NAME);
-        statement.setString(2, request.getTaskOwnerUUID().toString());
-        statement.setString(3,request.getTaskOwner());
-        statement.setString(4, RequestState.CLAIMED.toString());
-        statement.setString(5, Integer.toString(request.getID()));
+       // statement.setString(1, Config.SQL_TABLE_NAME);
+        statement.setString(1, request.getTaskOwnerUUID().toString());
+        statement.setString(2,request.getTaskOwner());
+        statement.setString(3, RequestState.CLAIMED.toString());
+        statement.setString(4, Integer.toString(request.getID()));
 
         return statement;
 
