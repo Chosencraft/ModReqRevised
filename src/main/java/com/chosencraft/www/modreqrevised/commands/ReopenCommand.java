@@ -35,6 +35,8 @@ public class ReopenCommand extends Command
             if (request == null)
             {
                 commandSender.sendMessage(ChatColor.RED + "Pulling modreq from database, this may take a moment");
+                //TODO: check if the req actually exists
+                // atm this just silently fails, however it works.
             }
             try
             {
