@@ -27,7 +27,7 @@ public class GetModReqIDQuery implements ExecuteQuery
     @Override
     public void execute(ResultSet results)
     {
-        Player sender = Bukkit.getPlayerExact(req.getRequester());
+        Player sender = Bukkit.getPlayer(req.getRequesterUUID());
         if(sender != null)
         {
             try
@@ -36,7 +36,7 @@ public class GetModReqIDQuery implements ExecuteQuery
                 {
                     req.setID(results.getInt(1));
                     req.setTimestamp(results.getTimestamp(2));
-                    Cache.addModReq(req);
+                    //Cache.addModReq(req);
                 }
             }
             catch(SQLException sqlException)
@@ -45,13 +45,16 @@ public class GetModReqIDQuery implements ExecuteQuery
                 sqlException.printStackTrace();
             }
         }
-
+        else
+        {
+            System.out.println("? 50");
+        }
     }
 
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("SELECT  MAX(`requestID`) FROM " + Config.SQL_TABLE_NAME + " GROUP BY requestID ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("SELECT  MAX(`requestID`),`timestamp`  FROM " + Config.SQL_TABLE_NAME + " GROUP BY requestID ;");
 
         //statement.setString(1, Config.SQL_TABLE_NAME);
 

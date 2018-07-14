@@ -5,6 +5,7 @@ import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.Database;
 import com.chosencraft.www.modreqrevised.database.sql.MySQL;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.PrepareTableQuery;
+import com.chosencraft.www.modreqrevised.database.sql.query.queries.UpdateCacheQuery;
 import com.chosencraft.www.modreqrevised.listeners.StaffLoginListener;
 import com.chosencraft.www.modreqrevised.utils.Config;
 import com.chosencraft.www.modreqrevised.utils.Logger;
@@ -37,6 +38,8 @@ public class ModReqRevisedMain extends JavaPlugin
         setupTables();
         registerListeners();
         registerCommands();
+        // Retrieve any existing
+        Consumer.queue(new UpdateCacheQuery());
     }
 
     public void onDisable()
@@ -115,4 +118,5 @@ public class ModReqRevisedMain extends JavaPlugin
             new Consumer(this, database);
         }
     }
+
 }

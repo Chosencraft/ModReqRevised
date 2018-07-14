@@ -1,6 +1,10 @@
 package com.chosencraft.www.modreqrevised;
 
+import com.chosencraft.www.modreqrevised.database.sql.Consumer;
+import com.chosencraft.www.modreqrevised.database.sql.query.queries.UpdateCacheQuery;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -50,6 +54,17 @@ public class Cache
        {
            player.sendMessage(message);
        }
+    }
+
+    public static void startAutoSync(Plugin plugin)
+    {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run()
+            {
+                Consumer.queue(new UpdateCacheQuery());
+            }
+        }, 3000, 3000);
     }
 
 }

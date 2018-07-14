@@ -35,6 +35,7 @@ public class UpdateCacheQuery implements ExecuteQuery
         Cache.clearRequests();
         while(results.next())
         {
+            System.out.println(results.toString());
             UUID taskOwnerUUID = null;
 
             // Needed, otherwise if task owner is null, then the uuid conversion will throw an NPE

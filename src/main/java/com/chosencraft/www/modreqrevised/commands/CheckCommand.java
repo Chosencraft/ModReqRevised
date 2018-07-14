@@ -52,10 +52,10 @@ public class CheckCommand extends BukkitCommand
             if (!requests.isEmpty())
             {
                 Iterator<ModReq> iterator = requests.iterator();
+                System.out.println(requests.toString());
 
-                while (iterator.hasNext())
+                for (ModReq request : requestValues)
                 {
-                    ModReq request = iterator.next();
                     commandSender.sendMessage(request.getFormattedSummary());
                     requests.add(request); // This really doesn't seem needed at all
                 }
