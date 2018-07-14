@@ -48,13 +48,16 @@ public class CheckCommand extends BukkitCommand
             }
 
             commandSender.sendMessage(Chat.format("&b-------- There are " + requests.size() + " requests --------"));
-            for (ModReq request : requests)
+            if (!requests.isEmpty())
             {
-                if (request.getState().equals(RequestState.UNCLAIMED) || request.getState().equals(RequestState.CLAIMED))
+                for (ModReq request : requests)
                 {
-                    commandSender.sendMessage(request.getFormattedSummary());
-                    requests.add(request); // This really doesn't seem needed at all
+                    if (request.getState().equals(RequestState.UNCLAIMED) || request.getState().equals(RequestState.CLAIMED))
+                    {
+                        commandSender.sendMessage(request.getFormattedSummary());
+                        requests.add(request); // This really doesn't seem needed at all
 
+                    }
                 }
             }
         }
