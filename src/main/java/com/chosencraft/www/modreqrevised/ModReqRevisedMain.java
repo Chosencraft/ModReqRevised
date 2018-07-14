@@ -5,10 +5,13 @@ import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.Database;
 import com.chosencraft.www.modreqrevised.database.sql.MySQL;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.PrepareTableQuery;
+import com.chosencraft.www.modreqrevised.listeners.StaffLoginListener;
 import com.chosencraft.www.modreqrevised.utils.Config;
 import com.chosencraft.www.modreqrevised.utils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
+import org.bukkit.command.defaults.BukkitCommand;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
@@ -32,6 +35,7 @@ public class ModReqRevisedMain extends JavaPlugin
         config = new Config(this);
         configureSQL();
         setupTables();
+        registerListeners();
         registerCommands();
     }
 
@@ -83,6 +87,14 @@ public class ModReqRevisedMain extends JavaPlugin
 
     }
 
+    /**
+     * Registers all listeners for the plugin
+     */
+    private void registerListeners()
+    {
+        PluginManager pluginManager = Bukkit.getServer().getPluginManager();
+        pluginManager.registerEvents(new StaffLoginListener(), this);
+    }
 
     /**
      * Configure the SQL settings and instance a consumer
