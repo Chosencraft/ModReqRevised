@@ -219,6 +219,15 @@ public class ModReq
     }
 
     /**
+     * Updates the timestamp for the modreq
+     * @param timestamp Timestamp to set
+     */
+    public void setTimestamp(Timestamp timestamp)
+    {
+        this.timestamp = timestamp;
+    }
+
+    /**
      * Retrieve the resolution of the ModReq
      * @return The resolution of the ModReq
      */

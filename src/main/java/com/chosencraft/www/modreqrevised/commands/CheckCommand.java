@@ -13,6 +13,7 @@ import org.bukkit.command.defaults.BukkitCommand;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class CheckCommand extends BukkitCommand
@@ -50,14 +51,13 @@ public class CheckCommand extends BukkitCommand
             commandSender.sendMessage(Chat.format("&b-------- There are " + requests.size() + " requests --------"));
             if (!requests.isEmpty())
             {
-                for (ModReq request : requests)
-                {
-                    if (request.getState().equals(RequestState.UNCLAIMED) || request.getState().equals(RequestState.CLAIMED))
-                    {
-                        commandSender.sendMessage(request.getFormattedSummary());
-                        requests.add(request); // This really doesn't seem needed at all
+                Iterator<ModReq> iterator = requests.iterator();
 
-                    }
+                while (iterator.hasNext())
+                {
+                    ModReq request = iterator.next();
+                    commandSender.sendMessage(request.getFormattedSummary());
+                    requests.add(request); // This really doesn't seem needed at all
                 }
             }
         }

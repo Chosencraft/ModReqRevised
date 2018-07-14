@@ -35,6 +35,7 @@ public class GetModReqIDQuery implements ExecuteQuery
                 if(results.first())
                 {
                     req.setID(results.getInt(1));
+                    req.setTimestamp(results.getTimestamp(2));
                     Cache.addModReq(req);
                 }
             }
