@@ -2,6 +2,8 @@ package com.chosencraft.www.modreqrevised.listeners;
 
 import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.Permissions;
+import com.chosencraft.www.modreqrevised.database.sql.Consumer;
+import com.chosencraft.www.modreqrevised.database.sql.query.queries.UpdateCacheQuery;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +21,7 @@ public class StaffLoginListener implements Listener
         if (player.hasPermission(Permissions.PERM_UNCLAIMED_NOTIFY))
         {
             Cache.notifies.add(player);
+            Consumer.queue(new UpdateCacheQuery());
         }
     }
 

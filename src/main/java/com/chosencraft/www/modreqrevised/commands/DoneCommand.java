@@ -8,29 +8,16 @@ import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.DoneQuery;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
-public class DoneCommand extends BukkitCommand
+public class DoneCommand extends Command
 {
 
-
-    public DoneCommand(String commandName)
-    {
-        super(commandName);
-        this.description = "Finish a modreq!";
-        this.usageMessage = "/" + commandName + " <request ID>";
-        this.setAliases(new ArrayList<>());
-    }
-
     @Override
-    public boolean execute(CommandSender commandSender, String alias, String[] args)
+    public boolean passthrough(CommandSender commandSender, String[] args) throws NumberFormatException
     {
 
         if (!commandSender.hasPermission(Permissions.PERM_COMMAND_FINISH))
@@ -38,20 +25,15 @@ public class DoneCommand extends BukkitCommand
             // ignore silently
             return true;
         }
-
-        if (args.length > 0)
+        if (args.length == 1)
         {
-            int id;
+            commandSender.sendMessage(format(ChatColor.RED + "/modreq done <id>  [Resolution Message]"));
+            return true;
+        }
 
-            try
-            {
-                id = Integer.parseInt(args[0]);
-            }
-            catch (NumberFormatException formatException)
-            {
-                commandSender.sendMessage(ChatColor.RED + "That modreq does not exist!");
-                return true;
-            }
+        if (args.length > 1)
+        {
+            int id = Integer.parseInt(args[1]);
 
             ModReq request = Cache.requests.get(id);
 
@@ -81,9 +63,9 @@ public class DoneCommand extends BukkitCommand
 
             // string together resolution if it exists
             StringBuilder resolution = new StringBuilder();
-            if (args.length > 1)
+            if (args.length > 2)
             {
-                for (int i = 1; i < args.length ; i++)
+                for (int i = 2; i < args.length ; i++)
                 {
                     resolution.append(args[i]).append(" ");
                 }

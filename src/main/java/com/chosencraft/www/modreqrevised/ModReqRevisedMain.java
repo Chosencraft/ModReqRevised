@@ -38,8 +38,9 @@ public class ModReqRevisedMain extends JavaPlugin
         setupTables();
         registerListeners();
         registerCommands();
-        // Retrieve any existing
+        // Retrieve any existing modreqs and start auto updater
         Consumer.queue(new UpdateCacheQuery());
+        Cache.startAutoSync(this);
     }
 
     public void onDisable()
@@ -72,10 +73,7 @@ public class ModReqRevisedMain extends JavaPlugin
 
             // register all the commands.
             commandMap.register("request", new RequestCommand("request"));
-            commandMap.register("claim", new ClaimRequestCommand("claim"));
-            commandMap.register("done", new DoneCommand("done"));
-            commandMap.register("reopen", new ReopenCommand("reopen"));
-            commandMap.register("check", new CheckCommand("check"));
+            commandMap.register("modreq", new ModReqCommand("modreq"));
         }
         catch (IllegalAccessException accessException)
         {

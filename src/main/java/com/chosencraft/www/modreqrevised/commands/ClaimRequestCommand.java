@@ -9,66 +9,52 @@ import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.ClaimQuery;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.UnclaimQuery;
 import com.chosencraft.www.modreqrevised.utils.RequestState;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 
-
-public class ClaimRequestCommand extends BukkitCommand
+public class ClaimRequestCommand extends Command
 {
 
-    public ClaimRequestCommand(String commandName)
-    {
-        super(commandName);
-        this.description = "Claim a modreq!";
-        this.usageMessage = "/" + commandName + " <ModReq ID>";
-        this.setAliases(new ArrayList<>());
-    }
-
     @Override
-    public boolean execute(CommandSender sender, String alias, String[] args)
+    public boolean passthrough(CommandSender commandSender, String[] args) throws NumberFormatException
     {
-        if (!sender.hasPermission(Permissions.PERM_COMMAND_CLAIM))
+        if (!commandSender.hasPermission(Permissions.PERM_COMMAND_CLAIM))
         {
             // silent ignore
             return true;
         }
-
-        if (args.length > 0)
+        if (args.length == 1)
         {
-            int id = -1; // all reqs are positive, so this will never exist
-            try
-            {
-                id = Integer.parseInt(args[0]);
-            }
-            catch (NumberFormatException formatException)
-            {
-                sender.sendMessage(Chat.format("&cThat is not a number!"));
-            }
+            commandSender.sendMessage(format(ChatColor.RED + "/modreq claim <id>"));
+            return true;
+        }
+
+        if (args.length > 1)
+        {
+            int id = Integer.parseInt(args[1]);
+
             ModReq request = Cache.requests.get(id);
             if (request == null)
             {
-                sender.sendMessage(Chat.format("&cThat modreq does not exist!"));
+                commandSender.sendMessage(Chat.format(prefix +  "&cThat modreq does not exist!"));
             }
             else
             {
                 if (request.getState().equals(RequestState.UNCLAIMED))
                 {
-                    setOwner(request,sender);
+                    setOwner(request,commandSender);
                     Consumer.queue(new ClaimQuery(request));
-                    sender.sendMessage(Chat.format("&6You have claimed request " + id));
-                    Cache.notify(Chat.format(String.format("&d%s has claimed modreq # %d", sender.getName(),id)));
+                    commandSender.sendMessage(Chat.format(prefix + "&6You have claimed request " + id));
+                    Cache.notify(Chat.format(String.format(prefix + "&d%s has claimed modreq # %d", commandSender.getName(),id)));
                 }
-                else if (request.getTaskOwner().equalsIgnoreCase(sender.getName()))
+                else if (request.getTaskOwner().equalsIgnoreCase(commandSender.getName()))
                 {
                     setOwner(request, null);
                     Consumer.queue(new UnclaimQuery(request));
-                    sender.sendMessage(Chat.format("&6You have unclaimed request " + id));
-                    Cache.notify(Chat.format(String.format("&d%s has unclaimed modreq # %d", sender.getName(),id)));
+                    commandSender.sendMessage(Chat.format(prefix + "&6You have unclaimed request " + id));
+                    Cache.notify(Chat.format(String.format(prefix + "&d%s has unclaimed modreq # %d", commandSender.getName(),id)));
                 }
 
             }
@@ -79,22 +65,22 @@ public class ClaimRequestCommand extends BukkitCommand
     /**
      * sets the owner of the request
      * @param request The request to be modified
-     * @param sender Sets the owenr of the request, null is allowed for unclaiming
+     * @param commandSender Sets the owenr of the request, null is allowed for unclaiming
      */
-    private void setOwner(ModReq request, CommandSender sender)
+    private void setOwner(ModReq request, CommandSender commandSender)
     {
-        if (sender == null)
+        if (commandSender == null)
         {
             request.setTaskOwner(null, null);
         }
-        else if (sender instanceof Player)
+        else if (commandSender instanceof Player)
         {
-            Player player = (Player) sender;
+            Player player = (Player) commandSender;
             request.setTaskOwner(player.getName(), player.getUniqueId());
         }
         else
         {
-            request.setTaskOwner(sender.getName(), ModReqRevisedMain.consoleUUID);
+            request.setTaskOwner(commandSender.getName(), ModReqRevisedMain.consoleUUID);
         }
     }
 }

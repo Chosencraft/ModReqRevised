@@ -22,7 +22,7 @@ public class ReopenQuery implements Query
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET `requestState`=? ;");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET `requestState`=? `taskOwnerUUID'='null' taskOwnerResolution='null';");
 
         //statement.setString(1, Config.SQL_TABLE_NAME);
         statement.setString(1, RequestState.UNCLAIMED.toString());

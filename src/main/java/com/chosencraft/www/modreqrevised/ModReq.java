@@ -294,11 +294,11 @@ public class ModReq
             Player p = Bukkit.getPlayerExact(this.getRequester());
             if (p != null && p.isOnline())
             {
-                sb.append("&6#").append(this.requestID).append(" &a").append(this.getRequester()).append(" &7- ");
+                sb.append("&4#").append(this.requestID).append(" &6[ &b").append(this.getRequester()).append("&6] &7- ");
             } else
             {
 
-                sb.append("&6#").append(this.requestID).append("&c").append(this.getRequester()).append(" &7- ");
+                sb.append("&4#").append(this.requestID).append(" &6[ &c").append(this.getRequester()).append("&6] &7- ");
             }
 
 

@@ -6,42 +6,29 @@ import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.ReopenQuery;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 
-import java.util.ArrayList;
-
-public class ReopenCommand extends BukkitCommand
+public class ReopenCommand extends Command
 {
 
-    public ReopenCommand(String commandName)
-    {
-        super(commandName);
-        this.description = "Reopen a finished command!!";
-        this.usageMessage = "/" + commandName + " <request ID>";
-        this.setAliases(new ArrayList<>());
-    }
     @Override
-    public boolean execute(CommandSender commandSender, String alias, String[] args)    {
+    public boolean passthrough(CommandSender commandSender, String[] args) throws NumberFormatException
+    {
         if (!commandSender.hasPermission(Permissions.PERM_COMMAND_REOPEN))
         {
             // ignore silently
             return true;
         }
-        if (args.length > 0 )
+
+        if (args.length == 1)
         {
-            int id;
-            try
-            {
-                id = Integer.parseInt(args[0]);
-            }
-            catch (NumberFormatException formatException)
-            {
-                commandSender.sendMessage(ChatColor.RED + "That is not a request!");
-                return true;
-            }
+            commandSender.sendMessage(format(ChatColor.RED + "/modreq reopen <id> "));
+            return true;
+        }
+
+        if (args.length > 1 )
+        {
+            int id = Integer.parseInt(args[1]);
 
             ModReq request = Cache.requests.get(id);
             if (request == null)
@@ -51,7 +38,7 @@ public class ReopenCommand extends BukkitCommand
             }
             StringBuilder builder = new StringBuilder();
 
-            for (int i = 1; i < args.length ; i++)
+            for (int i = 2; i < args.length ; i++)
             {
                 builder.append(args[i]).append(" ");
             }

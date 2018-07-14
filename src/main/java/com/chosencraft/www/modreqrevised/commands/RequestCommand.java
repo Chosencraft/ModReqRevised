@@ -4,11 +4,8 @@ import com.chosencraft.purefocus.Chat;
 import com.chosencraft.www.modreqrevised.ModReq;
 import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.NewModReqQuery;
-import com.chosencraft.www.modreqrevised.utils.RequestState;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
@@ -91,8 +88,9 @@ public class RequestCommand extends BukkitCommand
                             msg
                     );
                     new NewModReqQuery(modReq);
+                    player.sendMessage(net.md_5.bungee.api.ChatColor.GREEN + "Your moderator request has been sent! A staff member should be with you shortly");
                     //TODO: probably also add to cache here? appears not to be a thing in pures, but could be an oddity
-
+                    return true;
                 }
 
             }
