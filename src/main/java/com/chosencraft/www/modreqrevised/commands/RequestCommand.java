@@ -96,7 +96,7 @@ public class RequestCommand extends BukkitCommand
             }
             else
             {
-                sender.sendMessage(Chat.format("&cYou must use at least 3 words to submit a moderator RequestCommand!"));
+                sender.sendMessage(Chat.format("&cYou must use at least 3 words to submit a moderator request!"));
             }
         }
         else

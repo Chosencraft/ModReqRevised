@@ -22,7 +22,7 @@ public class UnclaimQuery implements Query
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-            PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET 'requestState'=?, 'taskOwnerName'='null', taskOwnerUUID='null' ;");
+            PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET `requestState`=? ,`taskOwnerName`=null , `taskOwnerUUID`='null' , `taskResolution`=null;");
 
            // statement.setString(1, Config.SQL_TABLE_NAME);
             statement.setString(1, RequestState.UNCLAIMED.toString());

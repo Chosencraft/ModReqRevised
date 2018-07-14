@@ -48,12 +48,16 @@ public class ModReqCommand extends BukkitCommand
                 commandSender.sendMessage(ChatColor.RED + "That is not a valid ID!");
             }
         }
+        else
+        {
+            printHelpMessage(commandSender);
+        }
         return true;
     }
 
     private void printHelpMessage(CommandSender commandSender)
     {
-        commandSender.sendMessage(Chat.center(ChatColor.GOLD + "[" + ChatColor.AQUA + "ModReq" + ChatColor.GOLD + "]"));
+        commandSender.sendMessage(Chat.center(Chat.format("&2---------------- &6[ &bModReq &6] &2----------------")));
         commandSender.sendMessage(Chat.format(String.format("&6%s -> &b%s", "/modreq", "Displays this help menu")));
         commandSender.sendMessage(Chat.format(String.format("&6%s -> &b%s", "/modreq check [id]", "Checks for unclaimed modreqs, and detailed info if an ID is specified, only supports reqs in cache at the time.")));
         commandSender.sendMessage(Chat.format(String.format("&6%s -> &b%s", "/modreq claim <id>", "Toggles claim of a modreq with ID  <id>.")));

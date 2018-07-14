@@ -19,6 +19,7 @@ public class NewModReqQuery implements Query
         this.req = req;
         Consumer.queue(this);
         Consumer.queue(new GetModReqIDQuery(req));
+        Consumer.queue(new UpdateCacheQuery());
     }
 
 

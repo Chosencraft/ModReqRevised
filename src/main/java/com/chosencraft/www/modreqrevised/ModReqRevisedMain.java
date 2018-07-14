@@ -27,6 +27,9 @@ public class ModReqRevisedMain extends JavaPlugin
 
     public static UUID consoleUUID = UUID.fromString("00000000-0000-0000-0000-000000000001"); // console reserved uuid
 
+
+    private Consumer consumer;
+
     public void onEnable()
     {
         this.logger = new Logger(getLogger());
@@ -45,6 +48,7 @@ public class ModReqRevisedMain extends JavaPlugin
 
     public void onDisable()
     {
+        consumer.stop();
         logger.logInfo("Disabling ModReq!");
     }
 
@@ -113,7 +117,7 @@ public class ModReqRevisedMain extends JavaPlugin
         else
         {
             logger.logInfo("SQL connection successfully established!");
-            new Consumer(this, database);
+            this.consumer = new Consumer(this, database);
         }
     }
 

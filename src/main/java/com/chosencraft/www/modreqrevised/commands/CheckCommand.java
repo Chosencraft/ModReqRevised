@@ -5,7 +5,6 @@ import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.ModReq;
 import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.utils.RequestState;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -35,7 +34,11 @@ public class CheckCommand extends Command
 
             for (ModReq request : requestValues)
             {
-                if (request.getState().equals(RequestState.UNCLAIMED) || request.getState().equals(RequestState.CLAIMED))
+                if (request.getState().equals(RequestState.FINISHED))
+                {
+
+                }
+                else if (request.getState().equals(RequestState.UNCLAIMED) || request.getState().equals(RequestState.CLAIMED))
                 {
                     requests.add(request);
                 }
@@ -45,7 +48,6 @@ public class CheckCommand extends Command
             if (!requests.isEmpty())
             {
                 Iterator<ModReq> iterator = requests.iterator();
-                System.out.println(requests.toString());
 
                 for (ModReq request : requestValues)
                 {
@@ -87,7 +89,7 @@ public class CheckCommand extends Command
         // I could use a ternary op here, but it'd just be unreadable and ugly
         if (player != null && player.isOnline())
         {
-            commandSender.sendMessage(Chat.format(String.format("&4%d &6[&b&s&6] &4%s", request.getID(), player.getName(), request.getState().toString())));
+            commandSender.sendMessage(Chat.format(String.format("&4ID# %d &6[&b%s&6] &4%s", request.getID(), player.getName(), request.getState().toString())));
         }
         else
         {
@@ -100,11 +102,11 @@ public class CheckCommand extends Command
         Location location = request.getRequesterLocation();
         commandSender.sendMessage(Chat.format(String.format("&6Location: &2%s, &6[&2%d&6,&2%d&6,&2%d&6]", location.getWorld().getName(), location.getBlockX(), location.getBlockY(), location.getBlockZ())));
         // timestamp
-        commandSender.sendMessage(Chat.format(String.format("&6Time request was made: &5&s", convertToEST(request.getTimestamp()))));
+        commandSender.sendMessage(Chat.format(String.format("&6Time request was made: &5%s", convertToEST(request.getTimestamp()))));
         // Task owner
         if (request.getTaskOwner() != null)
         {
-            commandSender.sendMessage(Chat.format(String.format("&6Task Owner: &ds", Bukkit.getPlayer(request.getTaskOwnerUUID()).getName())));
+            commandSender.sendMessage(Chat.format(String.format("&6Task Owner: &d%s", Bukkit.getPlayer(request.getTaskOwnerUUID()).getName())));
         }
         // Task resolution
         if (request.getTaskResolution() != null)
@@ -120,6 +122,8 @@ public class CheckCommand extends Command
         Date utcHolder = new Date(utc);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a z");
 
-        return String.format(format, utcHolder);
+        dateFormat.setTimeZone(timeZone);
+        return dateFormat.format(utcHolder);
+
     }
 }

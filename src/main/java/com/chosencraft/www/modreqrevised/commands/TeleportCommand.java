@@ -49,7 +49,7 @@ public class TeleportCommand extends Command
                 Location location = request.getRequesterLocation();
                 player.teleport(location);
                 /// TODO: Triple formatting.... yeah this formatting crap is super messy, need to fix it.
-                player.sendMessage(Chat.format(format(String.format("^bYou have been teleported to &6ModReq %d &bat &2%s &6[&2%d&6,&2%d&6,&2%d&6]",
+                player.sendMessage(Chat.format(format(String.format("&bYou have been teleported to &6ModReq %d &bat &2%s &6[&2%d&6,&2%d&6,&2%d&6]",
                         request.getID(), location.getWorld().getName(),location.getBlockX(), location.getBlockY(), location.getBlockZ() ))));
                 return true;
             }

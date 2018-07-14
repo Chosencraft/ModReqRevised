@@ -1,11 +1,13 @@
 package com.chosencraft.www.modreqrevised.commands;
 
+import com.chosencraft.purefocus.Chat;
 import com.chosencraft.www.modreqrevised.Cache;
 import com.chosencraft.www.modreqrevised.ModReq;
 import com.chosencraft.www.modreqrevised.ModReqRevisedMain;
 import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.DoneQuery;
+import com.chosencraft.www.modreqrevised.utils.RequestState;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -47,6 +49,11 @@ public class DoneCommand extends Command
             Player requester = Bukkit.getPlayer(request.getRequesterUUID());
             UUID   taskOwnerUUID;
 
+            if (request.getState().equals(RequestState.UNCLAIMED))
+            {
+                commandSender.sendMessage(Chat.format(prefix + " &cThis modreq has not been claimed! it cannot be finished!"));
+                return true;
+            }
             if (requester != null)
             {
                 requester.sendMessage(ChatColor.GREEN + String.format("%s finished your modreq #%d!", commandSender.getName(), request.getID()));

@@ -12,21 +12,21 @@ import java.sql.SQLException;
 public class ReopenQuery implements Query
 {
 
-    private ModReq request;
+    private int requestID;
 
-    public ReopenQuery(ModReq request)
+    public ReopenQuery(int requestID)
     {
-        this.request = request;
+        this.requestID = requestID;
     }
 
     @Override
     public PreparedStatement getQuery() throws SQLException
     {
-        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET `requestState`=? `taskOwnerUUID'='null' taskOwnerResolution='null';");
+        PreparedStatement statement = ModReqRevisedMain.database.createPreparedStatement("UPDATE " + Config.SQL_TABLE_NAME + " SET `requestState`=? WHERE `RequestID`=?;");
 
         //statement.setString(1, Config.SQL_TABLE_NAME);
         statement.setString(1, RequestState.UNCLAIMED.toString());
-
+        statement.setInt(2,requestID);
         return statement;
 
     }

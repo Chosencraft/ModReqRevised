@@ -67,6 +67,7 @@ public class UpdateCacheQuery implements ExecuteQuery
             {
                 player.sendMessage(Chat.format("&cThere are still &b" + Cache.requests.size() + " &crequests!"));
             }
+            ModReqRevisedMain.logger.logInfo(Chat.format("&cThere are still &b" + Cache.requests.size() + " &crequests!"));
         }
     }
 

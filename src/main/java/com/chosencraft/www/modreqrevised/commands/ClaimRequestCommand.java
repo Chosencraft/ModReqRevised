@@ -38,7 +38,7 @@ public class ClaimRequestCommand extends Command
             ModReq request = Cache.requests.get(id);
             if (request == null)
             {
-                commandSender.sendMessage(Chat.format(prefix +  "&cThat modreq does not exist!"));
+                commandSender.sendMessage(Chat.format(prefix +  " &cThat modreq does not exist!"));
             }
             else
             {
@@ -46,15 +46,15 @@ public class ClaimRequestCommand extends Command
                 {
                     setOwner(request,commandSender);
                     Consumer.queue(new ClaimQuery(request));
-                    commandSender.sendMessage(Chat.format(prefix + "&6You have claimed request " + id));
-                    Cache.notify(Chat.format(String.format(prefix + "&d%s has claimed modreq # %d", commandSender.getName(),id)));
+                    commandSender.sendMessage(Chat.format(prefix + " &6You have claimed request " + id));
+                    Cache.notify(Chat.format(String.format(prefix + " &d%s has claimed modreq # %d", commandSender.getName(),id)));
                 }
                 else if (request.getTaskOwner().equalsIgnoreCase(commandSender.getName()))
                 {
                     setOwner(request, null);
                     Consumer.queue(new UnclaimQuery(request));
-                    commandSender.sendMessage(Chat.format(prefix + "&6You have unclaimed request " + id));
-                    Cache.notify(Chat.format(String.format(prefix + "&d%s has unclaimed modreq # %d", commandSender.getName(),id)));
+                    commandSender.sendMessage(Chat.format(prefix + " &6You have unclaimed request " + id));
+                    Cache.notify(Chat.format(String.format(prefix + " &d%s has unclaimed modreq # %d", commandSender.getName(),id)));
                 }
 
             }

@@ -5,6 +5,7 @@ import com.chosencraft.www.modreqrevised.ModReq;
 import com.chosencraft.www.modreqrevised.Permissions;
 import com.chosencraft.www.modreqrevised.database.sql.Consumer;
 import com.chosencraft.www.modreqrevised.database.sql.query.queries.ReopenQuery;
+import com.chosencraft.www.modreqrevised.database.sql.query.queries.UpdateCacheQuery;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -33,18 +34,23 @@ public class ReopenCommand extends Command
             ModReq request = Cache.requests.get(id);
             if (request == null)
             {
-                commandSender.sendMessage(ChatColor.RED + "That modreq does not exist!");
-                return true;
+                commandSender.sendMessage(ChatColor.RED + "Pulling modreq from database, this may take a moment");
             }
-            StringBuilder builder = new StringBuilder();
-
-            for (int i = 2; i < args.length ; i++)
+            try
             {
-                builder.append(args[i]).append(" ");
+                Consumer.queue(new ReopenQuery(id));
+                Consumer.queue(new UpdateCacheQuery());
+                Cache.notify(ChatColor.RED + String.format("%s has reopened modreq #%d.", commandSender.getName(), request.getID()));
             }
-            request.reopenTask();
-            Cache.notify(ChatColor.RED + String.format("%s has reopened modreq #%d.", commandSender.getName(), request.getID() ));
-            Consumer.queue(new ReopenQuery(request));
+            catch (NullPointerException nullPointerException)
+            {
+                /* This may sound absolutely insane, but this is the current "fix"
+                 * until i actually fix the issue
+                 *
+                 * The issues is that the two queries don't respond fast enough before request.getID is called,
+                 * I'll need to handle a wait timer on it to fix it, Later :tm:
+                 */
+            }
             return true;
 
         }
